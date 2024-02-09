@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="js/vue.js"></script>
+    <script defer src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Product App</title>
+</head>
+<body>
+
+<div id="app">
+<h2> Введите задачу</h2>
+    <form @submit.prevent="addTask">
+        <label for="createdAt">Дата создания:</label>
+        <input id="createdAt" type="date" v-model="newTask.createdAt" placeholder="Дата создания">
+        <label for="title">Заголовок задачи:</label>
+        <input id="title" type="text" v-model="newTask.title" placeholder="Заголовок задачи">
+        <label  id="description" for="description">Описание задачи:</label>
+        <input type="text" v-model="newTask.description" placeholder="Описание задачи">
+        <label for="deadline">Дэдлайн:</label>
+        <input id="deadline" type="date" v-model="newTask.deadline" placeholder="Дэдлайн">
+        <button type="submit">Добавить задачу</button>
+    </form>
+
+
+
+    <div class="container">
+        <div class="colum"> <p>Запланированные задачи</p>
+
+
+            <div v-for="(task, index) in  tasks" :key="index">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <p>Дэдлайн: {{ task.deadline }}</p>
+                <p>Дата создания: {{ task.createdAt }}</p>
+                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+                <button @click="editTask(index, task)">Редактировать</button>
+                <button @click="deleteTask(index)">Удалить</button>
+                <button @click="moveToInProgress(index)">Переместить в работу</button>
+            </div>
+
+
+
+
+        </div>
+        <div class="colum"> <p>Задачи в работе</p> </div>
+        <div class="colum"> <p>Тестирование</p> </div>
+        <div class="colum"> <p>Выполненные задачи</p> </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
