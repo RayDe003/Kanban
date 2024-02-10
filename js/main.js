@@ -8,14 +8,14 @@ new Vue({
                 deadline: '',
                 createdAt: new Date().toISOString().slice(0, 10),
                 lastEdited: null,
-                reason: ''
             },
             tasks: [],
             inProgressTasks: [],
             inTest: [],
             editingTaskIndex: null,
             editingColumn: null,
-
+            inProgressColumnReasons: [],
+            reasonInput: '',
         }
     },
     methods: {
@@ -36,13 +36,10 @@ new Vue({
                 this.tasks.push({ ...this.newTask });
             }
             this.newTask = { title: '', description: '', deadline: '', createdAt: new Date().toISOString().slice(0, 10), lastEdited: null };
+            this.reasonInput = '';
         },
         deleteTask(taskIndex, column) {
-            if (column === 'tasks') {
-                this.tasks.splice(taskIndex, 1);
-            } else if (column === 'inProgressTasks') {
-                this.inProgressTasks.splice(taskIndex, 1);
-            }
+            this.tasks.splice(taskIndex, 1);
             this.editingTaskIndex = null;
             this.editingColumn = null;
         },
@@ -62,7 +59,13 @@ new Vue({
         moveToFix(taskIndex) {
             const taskToMove = this.inTest.splice(taskIndex, 1)[0];
             this.inProgressTasks.push(taskToMove);
-            taskToMove.reason = reason;
+        },
+        addReasonToInProgressColumn(index) {
+            if (!Array.isArray(this.inProgressColumnReasons[index])) {
+                this.$set(this.inProgressColumnReasons, index, []); // Инициализируем массив причин, если он не был создан
+            }
+            this.inProgressColumnReasons[index].push(this.reasonInput);
+            this.reasonInput = '';
         },
     }
 });
