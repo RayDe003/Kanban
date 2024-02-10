@@ -32,23 +32,32 @@
     <div class="container">
         <div class="colum"> <p>Запланированные задачи</p>
 
-
             <div v-for="(task, index) in  tasks" :key="index">
                 <h3>{{ task.title }}</h3>
                 <p>{{ task.description }}</p>
                 <p>Дэдлайн: {{ task.deadline }}</p>
                 <p>Дата создания: {{ task.createdAt }}</p>
                 <p>Последнее редактирование: {{ task.lastEdited }}</p>
-                <button @click="editTask(index, task)">Редактировать</button>
-                <button @click="deleteTask(index)">Удалить</button>
+                <button @click="editTask(index, task, 'tasks')">Редактировать</button>
+                <button @click="deleteTask(index, 'tasks')">Удалить</button>
                 <button @click="moveToInProgress(index)">Переместить в работу</button>
             </div>
 
+        </div>
+        <div class="colum"> <p>Задачи в работе</p>
 
-
+            <div v-for="(task, index) in  inProgressTasks" :key="index">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <p>Дэдлайн: {{ task.deadline }}</p>
+                <p>Дата создания: {{ task.createdAt }}</p>
+                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+                <button @click="editTask(index, task, 'inProgressTasks')">Редактировать</button>
+                <button @click="deleteTask(index, 'inProgressTasks')">Удалить</button>
+                <button @click="moveToInTest(index)">Переместить в тестирование</button>
+            </div>
 
         </div>
-        <div class="colum"> <p>Задачи в работе</p> </div>
         <div class="colum"> <p>Тестирование</p> </div>
         <div class="colum"> <p>Выполненные задачи</p> </div>
     </div>
