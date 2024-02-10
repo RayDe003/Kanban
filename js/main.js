@@ -7,13 +7,15 @@ new Vue({
                 description: '',
                 deadline: '',
                 createdAt: new Date().toISOString().slice(0, 10),
-                lastEdited: null
+                lastEdited: null,
+                reason: ''
             },
             tasks: [],
             inProgressTasks: [],
             inTest: [],
             editingTaskIndex: null,
-            editingColumn: null
+            editingColumn: null,
+
         }
     },
     methods: {
@@ -24,6 +26,9 @@ new Vue({
                     this.$set(this.tasks, this.editingTaskIndex, updatedTask);
                 } else if (this.editingColumn === 'inProgressTasks') {
                     this.$set(this.inProgressTasks, this.editingTaskIndex, updatedTask);
+                }
+                else if (this.editingColumn === 'inTest') {
+                    this.$set(this.inTest, this.editingTaskIndex, updatedTask);
                 }
                 this.editingTaskIndex = null;
                 this.editingColumn = null;
@@ -53,6 +58,11 @@ new Vue({
         moveToInTest(taskIndex) {
             const taskToMove = this.inProgressTasks.splice(taskIndex, 1)[0];
             this.inTest.push(taskToMove);
+        },
+        moveToFix(taskIndex) {
+            const taskToMove = this.inTest.splice(taskIndex, 1)[0];
+            this.inProgressTasks.push(taskToMove);
+            taskToMove.reason = reason;
         },
     }
 });

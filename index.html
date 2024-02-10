@@ -58,7 +58,21 @@
             </div>
 
         </div>
-        <div class="colum"> <p>Тестирование</p> </div>
+        <div class="colum"> <p>Тестирование</p>
+            <div v-for="(task, index) in  inTest" :key="index">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <p>Дэдлайн: {{ task.deadline }}</p>
+                <p>Дата создания: {{ task.createdAt }}</p>
+                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+                <button @click="editTask(index, task, 'inTest')">Редактировать</button>
+                <button @click="deleteTask(index, 'inTest')">Удалить</button>
+                <button @click="moveToFix(index)">Переместить в работу</button>
+            </div>
+
+        </div>
+
+
         <div class="colum"> <p>Выполненные задачи</p> </div>
     </div>
 </div>
