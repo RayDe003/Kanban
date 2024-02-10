@@ -17,14 +17,14 @@
 <h2> Введите задачу</h2>
     <form @submit.prevent="addTask">
         <label for="createdAt">Дата создания:</label>
-        <input id="createdAt" type="date" v-model="newTask.createdAt" placeholder="Дата создания">
+        <input id="createdAt" type="date" v-model="newTask.createdAt" placeholder="Дата создания" required >
         <label for="title">Заголовок задачи:</label>
-        <input id="title" type="text" v-model="newTask.title" placeholder="Заголовок задачи">
+        <input id="title" type="text" v-model="newTask.title" placeholder="Заголовок задачи" required>
         <label  id="description" for="description">Описание задачи:</label>
         <input type="text" v-model="newTask.description" placeholder="Описание задачи">
         <label for="deadline">Дэдлайн:</label>
-        <input id="deadline" type="date" v-model="newTask.deadline" placeholder="Дэдлайн">
-        <button type="submit">Добавить задачу</button>
+        <input id="deadline" type="date" v-model="newTask.deadline" placeholder="Дэдлайн" required >
+        <button class="btn" type="submit">{{ editingTaskIndex !== null ? 'Сохранить изменения' : 'Добавить задачу' }}</button>
     </form>
 
 

@@ -26,7 +26,7 @@ input{
     margin-bottom: 20px;
 }
 
-button{
+.btn{
     margin-bottom: 30px;
     border: none;
     padding: 20px;
@@ -37,5 +37,4 @@ button{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
-    justify-content: space-evenly;
 }
