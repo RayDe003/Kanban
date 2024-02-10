@@ -80,12 +80,23 @@
                     <input id="reasonInput" type="text" v-model="reasonInput" placeholder="Введите причину">
                     <button type="submit">Добавить</button>
                 </form>
+
+                <button @click=" moveToCompleted(index)"> Сдано </button>
             </div>
 
         </div>
 
 
-        <div class="colum"> <p>Выполненные задачи</p> </div>
+        <div class="colum"> <p>Выполненные задачи</p>
+            <div v-for="(task, index) in completedTasks" :key="index" :style="{ backgroundColor: task.isExpired ? 'rgba(255, 0, 0, 0.5' : 'transparent' }">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <p>Дэдлайн: {{ task.deadline }}</p>
+                <p>Дата создания: {{ task.createdAt }}</p>
+                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+
+
+        </div>
     </div>
 </div>
 

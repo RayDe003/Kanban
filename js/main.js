@@ -16,6 +16,7 @@ new Vue({
             editingColumn: null,
             inProgressColumnReasons: [],
             reasonInput: '',
+            completedTasks: []
         }
     },
     methods: {
@@ -34,6 +35,7 @@ new Vue({
                 this.editingColumn = null;
             } else {
                 this.tasks.push({ ...this.newTask });
+                this.inProgressColumnReasons.push([]);
             }
             this.newTask = { title: '', description: '', deadline: '', createdAt: new Date().toISOString().slice(0, 10), lastEdited: null };
             this.reasonInput = '';
@@ -61,11 +63,17 @@ new Vue({
             this.inProgressTasks.push(taskToMove);
         },
         addReasonToInProgressColumn(index) {
-            if (!Array.isArray(this.inProgressColumnReasons[index])) {
-                this.$set(this.inProgressColumnReasons, index, []); // Инициализируем массив причин, если он не был создан
-            }
-            this.inProgressColumnReasons[index].push(this.reasonInput);
+            this.$set(this.inProgressColumnReasons, index, [...this.inProgressColumnReasons[index], this.reasonInput]);
             this.reasonInput = '';
+        },
+        moveToCompleted(taskIndex) {
+            const taskToMove = this.inTest.splice(taskIndex, 1)[0];
+            taskToMove.isExpired = this.isDeadlineExpired(taskToMove.deadline);
+            this.completedTasks.push(taskToMove);
+        },
+        isDeadlineExpired(deadline) {
+            const today = new Date().toISOString().slice(0, 10);
+            return deadline < today;
         },
     }
 });
