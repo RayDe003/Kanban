@@ -14,7 +14,7 @@ new Vue({
             inTest: [],
             editingTaskIndex: null,
             editingColumn: null,
-            inProgressColumnReasons: [],
+            reasons: [],
             reasonInput: '',
             completedTasks: []
         }
@@ -35,7 +35,7 @@ new Vue({
                 this.editingColumn = null;
             } else {
                 this.tasks.push({ ...this.newTask });
-                this.inProgressColumnReasons.push([]);
+                this.reasons.push([]);
             }
             this.newTask = { title: '', description: '', deadline: '', createdAt: new Date().toISOString().slice(0, 10), lastEdited: null };
             this.reasonInput = '';
@@ -58,13 +58,14 @@ new Vue({
             const taskToMove = this.inProgressTasks.splice(taskIndex, 1)[0];
             this.inTest.push(taskToMove);
         },
-        moveToFix(taskIndex) {
+        addReason(taskIndex) {
             const taskToMove = this.inTest.splice(taskIndex, 1)[0];
-            this.inProgressTasks.push(taskToMove);
-        },
-        addReasonToInProgressColumn(index) {
-            this.$set(this.inProgressColumnReasons, index, [...this.inProgressColumnReasons[index], this.reasonInput]);
+            if (!this.reasons.hasOwnProperty(taskIndex)) {
+                this.$set(this.reasons, taskIndex, []);
+            }
+            this.reasons[taskIndex].push(this.reasonInput);
             this.reasonInput = '';
+            this.inProgressTasks.push(taskToMove);
         },
         moveToCompleted(taskIndex) {
             const taskToMove = this.inTest.splice(taskIndex, 1)[0];
