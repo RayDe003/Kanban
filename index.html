@@ -14,7 +14,7 @@
 <body>
 
 <div id="app">
-<h2> Введите задачу</h2>
+    <h2> Введите задачу</h2>
     <form @submit.prevent="addTask">
         <label for="createdAt">Дата создания:</label>
         <input id="createdAt" type="date" v-model="newTask.createdAt" placeholder="Дата создания" required >
@@ -28,7 +28,6 @@
     </form>
 
 
-
     <div class="container">
         <div class="colum"> <p>Запланированные задачи</p>
 
@@ -37,7 +36,9 @@
                 <p>{{ task.description }}</p>
                 <p>Дэдлайн: {{ task.deadline }}</p>
                 <p>Дата создания: {{ task.createdAt }}</p>
-                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+
+                <p v-if="task.lastEdited">Последнее редактирование: {{ task.lastEdited }}</p>
+
                 <button @click="editTask(index, task, 'tasks')">Редактировать</button>
                 <button @click="deleteTask(index, 'tasks')">Удалить</button>
                 <button @click="moveToInProgress(index)">Переместить в работу</button>
@@ -51,16 +52,12 @@
                 <p>{{ task.description }}</p>
                 <p>Дэдлайн: {{ task.deadline }}</p>
                 <p>Дата создания: {{ task.createdAt }}</p>
-                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+                <p v-if="task.lastEdited">Последнее редактирование: {{ task.lastEdited }}</p>
+                <p v-if="reasons[index] && reasons[index].length > 0">
+                    Причина: {{ reasons[index][0] }} <!-- Выводим только первую причину -->
+                </p>
                 <button @click="editTask(index, task, 'inProgressTasks')">Редактировать</button>
                 <button @click="moveToInTest(index)">Переместить в тестирование</button>
-
-                <p v-if="inProgressColumnReasons[index] && inProgressColumnReasons[index].length">
-                    Причина: {{ inProgressColumnReasons[index][inProgressColumnReasons[index].length - 1] }}
-                </p>
-
-
-
             </div>
 
         </div>
@@ -71,16 +68,14 @@
                 <p>{{ task.description }}</p>
                 <p>Дэдлайн: {{ task.deadline }}</p>
                 <p>Дата создания: {{ task.createdAt }}</p>
-                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+                <p v-if="task.lastEdited">Последнее редактирование: {{ task.lastEdited }}</p>
                 <button @click="editTask(index, task, 'inTest')">Редактировать</button>
-                <button @click="moveToFix(index, 'Причина')">Переместить в работу</button>
 
-                <form @submit.prevent="addReasonToInProgressColumn (index)">
+                <form @submit.prevent="addReason(index)">
                     <label for="reasonInput">Добавить причину:</label>
                     <input id="reasonInput" type="text" v-model="reasonInput" placeholder="Введите причину">
-                    <button type="submit">Добавить</button>
+                    <button type="submit">Переместить в работу</button>
                 </form>
-
                 <button @click=" moveToCompleted(index)"> Сдано </button>
             </div>
 
@@ -93,13 +88,13 @@
                 <p>{{ task.description }}</p>
                 <p>Дэдлайн: {{ task.deadline }}</p>
                 <p>Дата создания: {{ task.createdAt }}</p>
-                <p>Последнее редактирование: {{ task.lastEdited }}</p>
+                <p v-if="task.lastEdited">Последнее редактирование: {{ task.lastEdited }}</p>>
 
 
+            </div>
         </div>
     </div>
 </div>
-
 
 
 </body>
