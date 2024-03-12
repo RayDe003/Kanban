@@ -8,13 +8,13 @@ new Vue({
                 deadline: '',
                 createdAt: new Date().toISOString().slice(0, 10),
                 lastEdited: null,
+                reason_line: ''
             },
             tasks: [],
             inProgressTasks: [],
             inTest: [],
             editingTaskIndex: null,
             editingColumn: null,
-            reasons: [],
             reasonInput: '',
             completedTasks: []
         }
@@ -34,10 +34,9 @@ new Vue({
                 this.editingTaskIndex = null;
                 this.editingColumn = null;
             } else {
-                this.tasks.push({ ...this.newTask });
-                this.reasons.push([]);
+                this.tasks.push({ ...this.newTask, reason_line: '' });
             }
-            this.newTask = { title: '', description: '', deadline: '', createdAt: new Date().toISOString().slice(0, 10), lastEdited: null };
+            this.newTask = { title: '', description: '', deadline: '', createdAt: new Date().toISOString().slice(0, 10), lastEdited: null , reason_line: ''};
             this.reasonInput = '';
         },
         deleteTask(taskIndex, column) {
@@ -60,10 +59,7 @@ new Vue({
         },
         addReason(taskIndex) {
             const taskToMove = this.inTest.splice(taskIndex, 1)[0];
-            if (!this.reasons.hasOwnProperty(taskIndex)) {
-                this.$set(this.reasons, taskIndex, []);
-            }
-            this.reasons[taskIndex].push(this.reasonInput);
+            taskToMove.reason_line = this.reasonInput;
             this.reasonInput = '';
             this.inProgressTasks.push(taskToMove);
         },
