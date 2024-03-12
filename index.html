@@ -9,7 +9,7 @@
     <script defer src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
 
-    <title>Product App</title>
+    <title>Канбан</title>
 </head>
 <body>
 
@@ -53,8 +53,8 @@
                 <p>Дэдлайн: {{ task.deadline }}</p>
                 <p>Дата создания: {{ task.createdAt }}</p>
                 <p v-if="task.lastEdited">Последнее редактирование: {{ task.lastEdited }}</p>
-                <p v-if="reasons[index] && reasons[index].length > 0">
-                    Причина: {{ reasons[index][0] }} <!-- Выводим только первую причину -->
+                <p v-if="task.reason_line && task.reason_line.length > 0">
+                    Причина: {{ task.reason_line }} 
                 </p>
                 <button @click="editTask(index, task, 'inProgressTasks')">Редактировать</button>
                 <button @click="moveToInTest(index)">Переместить в тестирование</button>
@@ -76,6 +76,7 @@
                     <input id="reasonInput" type="text" v-model="reasonInput" placeholder="Введите причину">
                     <button type="submit">Переместить в работу</button>
                 </form>
+
                 <button @click=" moveToCompleted(index)"> Сдано </button>
             </div>
 
@@ -83,14 +84,12 @@
 
 
         <div class="colum"> <p>Выполненные задачи</p>
-            <div v-for="(task, index) in completedTasks" :key="index" :style="{ backgroundColor: task.isExpired ? 'rgba(255, 0, 0, 0.5' : 'transparent' }">
+            <div v-for="(task, index) in completedTasks" :key="index" :style="{ backgroundColor: task.isExpired ? 'rgba(255, 0, 0, 0.5)' : 'transparent' }">
                 <h3>{{ task.title }}</h3>
                 <p>{{ task.description }}</p>
                 <p>Дэдлайн: {{ task.deadline }}</p>
                 <p>Дата создания: {{ task.createdAt }}</p>
-                <p v-if="task.lastEdited">Последнее редактирование: {{ task.lastEdited }}</p>>
-
-
+                <p v-if="task.lastEdited">Последнее редактирование: {{ task.lastEdited }}</p>
             </div>
         </div>
     </div>
